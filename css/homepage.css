@@ -1,0 +1,57 @@
+header, footer {
+	position: relative;
+	width: 100%;
+	text-align: center;
+	background-color: coral;
+	background-size: 72px 72px;
+	color: white;
+	border: solid black 2px;
+
+}
+
+#headerDiv, #footerDiv {
+	padding-top: 25px;
+	padding-bottom: 25px;
+	box-shadow: 10px 5px 5px grey;
+}
+
+
+#navContainer {
+    position: relative;
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: 50px;
+
+}
+
+#navbar {
+	margin-top: 0;
+	margin-left: auto;
+	margin-right: auto;
+	font-family: times;
+	text-align: left;
+	text-decoration: none;
+	display: inline-block;
+	text-align: center;
+	width: 100%;
+}
+
+#exchForm {
+	margin-top: 50px;
+	border: solid black 2px;
+	box-shadow: 10px 5px 5px grey;
+	min-height: 500px;
+	text-align: center;
+}
+
+.navDiv {
+	display: inline-block;
+	width: 300px;
+	border: solid black 2px;
+	box-shadow: 10px 5px 5px grey;
+	text-align: center;
+	background-color: gainsboro;
+	color: black;
+}
