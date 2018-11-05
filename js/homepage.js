@@ -53,6 +53,19 @@ $(document).ready(function() {
 	var codesToInput = [];
 	var totalFront = 0;
 	var totalBack = 0;
+	var hoursWorked = 0;
+	var target = 0;
+	var percentTarget = 0;
+	var toTarget = 0;
+	var tags = 0;
+
+
+	var date = new Date();
+
+	var month = date.getMonth()+1;
+	var day = date.getDate();
+
+	var dateFormatted = month + '/'  + day + '/' + date.getFullYear();
 
 
 	
@@ -132,12 +145,48 @@ $(document).ready(function() {
 	var initializeInput = function () {
 
 		$("#formContainer").append(
+			
+			/*
+			"<div id='resCode' class='resCodes' index=''>" +
+			"<div class='abbr cell'>Hours Worked</div>" +
+			"<div class='fop cell' value='" + "FP" + "'>" + "Front Generated" + "</div>" + 
+			"<div class='bop cell' value='" + "BP"+ "'>" + "Back Generated" + "</div>" + 
+			"<div class='description cell'>" + "Description" + "</div>" + 
+			"<div class='rhs'>"+
+			"<div class='numInput cell' id='tags'>" + "Tags" + "</div>" +
+			"</div>" +
+			*/
+
+			"<div id='inputs' class='resCodes'>"+
+			"<h3>Input</h3>" +
+			"<div class='cell results'><div>Initials</div><input type='text' id='initials'></input></div>"+
+			"<div class='cell results'><div id='workedDiv'>Hours Worked</div><input type='text' id='worked' ></input></div>" +
+			"<div class='cell results'><div>Target Percent</div><input type='text' id='target' ></input></div>" +
+			
+			"<h3>Results</h3>" +
+			"<div class='cell results'><div id='genFront'>Generated Front</div><input class='displayResult' type='text' id='generatedFront' value='0'></input></div>" +
+			"<div class='cell results'><div id='genBack'> Generated Back</div><input class='displayResult' type='text' id='generatedBack' value='0'></input></div>" +
+			"<div class='cell results'><div id='toTar'>To Target</div><input type='text' class='displayResult' id='toTarget' value='0'></input></div>" +
+			"<div class='cell results'><div id='tagsTotalT'>Total Tags</div><input type='text' class='displayResult' id='tagsTotal' value='0'></input></div>"+
+			"<div class='cell results'><input type='submit' id='csv' value='Get CSV'></input></div>" +
+			
+			"<h3>Select Code</h3>"+
 			"<select id='selectCode'>" +
-			"<option class='selectCodes' value='default'>Select Code</option>" +
-			"<input id='adder' type='submit' value='Add'> </input>" +
-			"</select>" 
+			"<option class='selectCodes' value='default'>Select Resolution Code</option>" +
+			"</select>"+
+			"</div>"+
+			
+			"<div id='resCode' class='resCodes' index=''>" +
+			"<div class='abbr cell'>CODE</div>" +
+			"<div class='fop cell' value='" + "FP" + "'>" + "FP" + "</div>" + 
+			"<div class='bop cell' value='" + "BP"+ "'>" + "BP" + "</div>" + 
+			"<div class='description cell'>" + "Description" + "</div>" + 
+			"<div class='rhs'>"+
+			"<div class='numInput cell' id='tags'>" + "Tags" + "</div>" +
+			"</div>"
 			
 			);
+
 
 		for(var i = 0; i < rezCodes.length; i++)
 		{
@@ -158,18 +207,16 @@ $(document).ready(function() {
 
 	initializeInput();
 
-	$('#adder').click(function () {
+	$('#selectCode').change(function () {
 
 		let index = $('#selectCode').val();
 		if( index != 'default')
 		{
 			$("#resCode" + index).show();
+			$("#selectCode").val('default');
 		}
 
 	})
-	
-
-
 	
 
 
@@ -198,6 +245,52 @@ $(document).ready(function() {
 		logTotal();
 	})
 
+	$('#worked').change(function() {
+		if (isNaN($(this).val()) == true ) 
+		{
+			alert("Must be a number");
+			$(this).val('');
+			hoursWorked = 0;
+		}
+		else
+		{
+			hoursWorked = $(this).val();
+		}
+	})
+
+	$('#target').change(function() {
+		if (isNaN($(this).val()) == true ) 
+		{
+			alert("Must be a number");
+			$(this).val('');
+			percentTarget = 0;
+		}
+		else
+		{
+			percentTarget = $(this).val();
+			target = percentTarget/100;
+		}
+
+	})
+	$('#csv').click(function ()
+	{	
+		if(!$("#csvResult").length)
+		{
+			$('#inputs').append("</br><div class='cell results'><input type='text' id='csvResult'> </input><div>");
+		}
+		
+
+		$('#csvResult').val(dateFormatted.toString() + "," + $('#initials').val().toString() + "," + $('#worked').val().toString() + "," + $('#generatedFront').val().toString() + "," + $('#generatedBack').val().toString() +
+			"," + $('#toTarget').val().toString() + "," + $('#tagsTotal').val().toString());
+		
+	})
+
+	$('.displayResult').change(function() {
+		logTotal();
+	})
+
+	
+
 
 
 	//Removes current Code when x is clicked.
@@ -225,6 +318,8 @@ $(document).ready(function() {
 			totalFront -= ((code.count * code.fop) / 60);
 		if(code.bop > 0)
 			totalBack -= ((code.count * code.bop) / 60);
+
+		tags -= code.count * 1;
 	}
 
 	//Takes in res code and increases the total times (minutes)
@@ -234,11 +329,17 @@ $(document).ready(function() {
 			totalFront += (code.count * code.fop) / 60;
 		if(code.bop > 0)
 			totalBack += (code.count * code.bop) / 60;
+
+		tags += code.count * 1;
 	}
 	
 	//logs current Time
 	var logTotal = function()
 	{
+		$('#generatedFront').val(totalFront.toFixed(2));
+		$('#generatedBack').val(totalBack.toFixed(2));
+		$('#tagsTotal').val(tags);
+		$('#toTarget').val(((totalBack) - (hoursWorked * target)).toFixed(2));
 		console.log("Total Front: " + totalFront.toFixed(2));
 		console.log("Total Back: " + totalBack.toFixed(2));
 	}

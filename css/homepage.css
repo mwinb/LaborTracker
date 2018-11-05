@@ -9,6 +9,12 @@ header, footer {
 
 }
 
+input {
+	text-align: center;
+}
+
+
+
 #headerDiv, #footerDiv {
 	padding-top: 25px;
 	padding-bottom: 25px;
@@ -46,6 +52,27 @@ header, footer {
 	text-align: center;
 }
 
+#selectCode {
+	
+	margin-bottom: 5%;
+
+}
+
+#tags {
+	padding-right: 10%;
+}
+
+#formContainer {
+}
+
+#worked {
+	position: relative;
+}
+
+#csvResult {
+	width: 200px;
+}
+
 .navDiv {
 	display: inline-block;
 	width: 300px;
@@ -55,3 +82,75 @@ header, footer {
 	background-color: gainsboro;
 	color: black;
 }
+
+
+
+.resCodes {
+	border: solid coral 2px;
+	width: 50%;
+	align-content: center;
+	margin-right: 25%;
+	margin-left: 25%;
+	margin-top: 1%;
+	margin-bottom: 2%;
+	background-color: gainsboro;
+
+}
+
+.abbr {
+	float: left;
+
+}
+
+.fop {
+	float: left;
+}
+
+.bop {
+	float: left;
+}
+
+.description {
+	float: left;
+}
+
+
+
+.cell {
+	display: inline-block;
+	padding: 5px;
+	margin: 5px;
+
+}
+.rhs {
+	overflow: auto;
+	direction: ltr;
+	text-align: right;
+}
+
+
+
+.results {
+	text-align: center;
+}
+
+
+
+
+.numInput {
+	width: 50px;
+	text-align: center;
+	margin-right: 100px;
+	
+		
+}
+
+.removeCode {
+	color: white;
+	background-color: #010202;
+	
+
+}
+
+
+
