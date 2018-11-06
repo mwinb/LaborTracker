@@ -61,7 +61,7 @@ $(document).ready(function() {
 	var percentTarget = 0;
 	var target = 0;
 	var toTarget = 0;
-	var tags = 0;
+
 
 	//Create month/day/year date
 	var date = new Date();
@@ -178,7 +178,7 @@ $(document).ready(function() {
 			"<th class='resHeader'>Generated Back</th>" +
 			"<th class='resHeader'>Target (hrs)</th>" +
 			"<th class='resHeader'>To Target (hrs)</th>" + 
-			"<th class='resHeader'>Total Tags</th>" + 
+ 
 			"</tr>" +
 			"<tr>" + 
 			"<td id='tDate'></td>" + 
@@ -188,7 +188,6 @@ $(document).ready(function() {
 			"<td id='tGenB'></td>" + 
 			"<td id='tTarget'></td>" +
 			"<td id='tToTarget'></td>" + 
-			"<td id='tTags'></td>" + 
 			"</tr>"+
 			"</table>" + 
 			"</div>" +
@@ -200,7 +199,7 @@ $(document).ready(function() {
 			"<div class='bop cell' value='" + "BP"+ "'>" + "BP" + "</div>" + 
 			"<div class='description cell'>" + "Description" + "</div>" + 
 			"<div class='rhs'>"+
-			"<div class='numInput cell' id='tags'>" + "Tags" + "</div>" +
+			"<div class='numInput cell' id='tags'>" + "Total" + "</div>" +
 			"</div>"
 			
 			);
@@ -374,7 +373,6 @@ $(document).ready(function() {
 		$('#tGenB').text(totalBack.toFixed(2));
 		$('#tTarget').text(target.toFixed(2));
 		$('#tToTarget').text(toTarget.toFixed(2));
-		$('#tTags').text(tags);
 		console.log("Total Front: " + totalFront.toFixed(2));
 		console.log("Total Back: " + totalBack.toFixed(2));
 	}
