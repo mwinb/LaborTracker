@@ -366,8 +366,6 @@ $(document).ready(function() {
         target = percentTarget * hoursWorked;
         toTarget = totalBack - target;
     
-        if( toTarget > 0 ) 
-            let toTarStr = "+" + toTarget.toFixed(2);
         
          
         $('#tDate').text(dateFormatted);
@@ -376,7 +374,7 @@ $(document).ready(function() {
         $('#tGenF').text(totalFront.toFixed(2));
         $('#tGenB').text(totalBack.toFixed(2));
         $('#tTarget').text(target.toFixed(2));
-        $('#tToTarget').text(toTarStr);
+        $('#tToTarget').text(toTarget.toFixed(2));
         console.log("Total Front: " + totalFront.toFixed(2));
         
     }
