@@ -9,9 +9,15 @@
 
 }
 
+footer {
+	margin-top: 2.5%;
+}
+
 input {
 	text-align: center;
 }
+
+
 
 
 
@@ -88,6 +94,8 @@ input {
 	padding: 10px;
 }
 
+
+
 .navDiv {
 	display: inline-block;
 	width: 300px;
@@ -102,6 +110,7 @@ input {
 
 .resCodes {
 	border: solid coral 2px;
+	box-shadow: 10px 5px 5px black;
 	width: 50%;
 	align-content: center;
 	margin-right: 25%;
