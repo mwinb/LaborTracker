@@ -53,18 +53,16 @@ $(document).ready(function() {
 	var codesToInput = [];
 	var totalFront = 0;
 	var totalBack = 0;
-	var hoursWorked = 0;
-	var target = 0;
+	var hoursWorked = 0;  
 	var percentTarget = 0;
+	var target = 0;
 	var toTarget = 0;
 	var tags = 0;
 
-
+//Create month/day/year date
 	var date = new Date();
-
 	var month = date.getMonth()+1;
 	var day = date.getDate();
-
 	var dateFormatted = month + '/'  + day + '/' + date.getFullYear();
 
 
@@ -141,42 +139,63 @@ $(document).ready(function() {
 	
 
 
-
+	//Creates the Input, Dropdown, result table, and key for res Codes.
+	//hides all resCode objects, result table, and key until resCode is inizialized via dropdown
 	var initializeInput = function () {
 
 		$("#formContainer").append(
 			
-			/*
-			"<div id='resCode' class='resCodes' index=''>" +
-			"<div class='abbr cell'>Hours Worked</div>" +
-			"<div class='fop cell' value='" + "FP" + "'>" + "Front Generated" + "</div>" + 
-			"<div class='bop cell' value='" + "BP"+ "'>" + "Back Generated" + "</div>" + 
-			"<div class='description cell'>" + "Description" + "</div>" + 
-			"<div class='rhs'>"+
-			"<div class='numInput cell' id='tags'>" + "Tags" + "</div>" +
-			"</div>" +
-			*/
 
 			"<div id='inputs' class='resCodes'>"+
 			"<h3>Input</h3>" +
-			"<div class='cell results'><div>Initials</div><input type='text' id='initials'></input></div>"+
-			"<div class='cell results'><div id='workedDiv'>Hours Worked</div><input type='text' id='worked' ></input></div>" +
-			"<div class='cell results'><div>Target Percent</div><input type='text' id='target' ></input></div>" +
-			
-			"<h3>Results</h3>" +
-			"<div class='cell results'><div id='genFront'>Generated Front</div><input class='displayResult' type='text' id='generatedFront' value='0'></input></div>" +
-			"<div class='cell results'><div id='genBack'> Generated Back</div><input class='displayResult' type='text' id='generatedBack' value='0'></input></div>" +
-			"<div class='cell results'><div id='toTar'>To Target</div><input type='text' class='displayResult' id='toTarget' value='0'></input></div>" +
-			"<div class='cell results'><div id='tagsTotalT'>Total Tags</div><input type='text' class='displayResult' id='tagsTotal' value='0'></input></div>"+
-			"<div class='cell results'><input type='submit' id='csv' value='Get CSV'></input></div>" +
+			"<div class='cell results'>" + 
+			"<div>Initials</div>" + 
+			"<input type='text' id='initials'></input>" + 
+			"</div>"+
+
+			"<div class='cell results'>" + 
+			"<div id='workedDiv'>Hours Worked</div>" + 
+			"<input type='text' id='worked' ></input>" + 
+			"</div>" +
+
+			"<div class='cell results'>" + 
+			"<div>Target Percent</div>" + 
+			"<input type='text' id='target' ></input>" + 
+			"</div>" +
 			
 			"<h3>Select Code</h3>"+
 			"<select id='selectCode'>" +
 			"<option class='selectCodes' value='default'>Select Resolution Code</option>" +
 			"</select>"+
+
+			"<div class='cell results' id='result'>" + 
+			"<h3>Results</h3>" +
+			"<table id='resTable'>"+
+			"<tr>" +
+			"<th class='resHeader'>Date</th>" + 
+			"<th class='resHeader'>Initials</th>" + 
+			"<th class='resHeaser'>Hours Worked</th>" + 
+			"<th class='resHeader'>Generated Front</th>" + 
+			"<th class='resHeader'>Generated Back</th>" +
+			"<th class='resHeader'>Target (hrs)</th>" +
+			"<th class='resHeader'>To Target (hrs)</th>" + 
+			"<th class='resHeader'>Total Tags</th>" + 
+			"</tr>" +
+			"<tr>" + 
+			"<td id='tDate'></td>" + 
+			"<td id='tInitials'></td>" + 
+			"<td id='tWorked'></td>" + 
+			"<td id='tGenF'></td>" + 
+			"<td id='tGenB'></td>" + 
+			"<td id='tTarget'></td>" +
+			"<td id='tToTarget'></td>" + 
+			"<td id='tTags'></td>" + 
+			"</tr>"+
+			"</table>" + 
+			"</div>" +
 			"</div>"+
-			
-			"<div id='resCode' class='resCodes' index=''>" +
+
+			"<div id='resCode' class='resCodes' +>" +
 			"<div class='abbr cell'>CODE</div>" +
 			"<div class='fop cell' value='" + "FP" + "'>" + "FP" + "</div>" + 
 			"<div class='bop cell' value='" + "BP"+ "'>" + "BP" + "</div>" + 
@@ -187,7 +206,7 @@ $(document).ready(function() {
 			
 			);
 
-
+		//Appends the resCodes and then hides until initialized via dropdown #selectCode
 		for(var i = 0; i < rezCodes.length; i++)
 		{
 
@@ -196,8 +215,12 @@ $(document).ready(function() {
 			$('#resCode' + i).hide();
 
 		}
-		
 
+		//Hides both the resCode key div and the result table until initialized via dropdown
+		$('#result').hide();
+		$('#resCode').hide();
+		
+		//Populates the Dropdown menu using the code and description from rezCode array
 		for(let i = 0; i < rezCodes.length; i++)
 		{
 			$("#selectCode").append("<option value='" + i + "' index='" + i + "' status='false' id='" + i + "' >" + rezCodes[i][0] + " - " + rezCodes[i][3] + "</option>");
@@ -205,21 +228,29 @@ $(document).ready(function() {
 		console.log("true");
 	}
 
+	//calls above function to initialize ARA input "screen"
 	initializeInput();
 
+	//if default from dropdown is selected, does nothing, otherwise
+	//shows the selected resCode, resCode key, and resets dropdown to default
 	$('#selectCode').change(function () {
 
 		let index = $('#selectCode').val();
 		if( index != 'default')
 		{
 			$("#resCode" + index).show();
+			$('#resCode').show();
 			$("#selectCode").val('default');
 		}
 
 	})
 	
 
-
+	/* 
+	 * Checks the number of tags from the currently selected resCode, if nan sets back to zero.
+	 * if input is a number, increases the count of the resCode object and increases fop and bop times
+	 * and updates and shows the result. 
+	*/
 	$('.numInput').change(function () {
 		let val = $(this).val();
 		let index = $(this).attr("index");
@@ -242,9 +273,16 @@ $(document).ready(function() {
 			code.setCount(val);
 			incrementTime(code);
 		}
+		$('#result').show();
 		logTotal();
 	})
 
+	//Updates result upon the change of the initials input.
+	$('#initials').change(function() {
+		logTotal();
+	})
+
+	//Updates result upon the change of "Hours Worked" input (unles NaN).
 	$('#worked').change(function() {
 		if (isNaN($(this).val()) == true ) 
 		{
@@ -255,9 +293,11 @@ $(document).ready(function() {
 		else
 		{
 			hoursWorked = $(this).val();
+			logTotal();
 		}
 	})
 
+	//Updates result upon the change of "Target Percent" input (unless NaN)
 	$('#target').change(function() {
 		if (isNaN($(this).val()) == true ) 
 		{
@@ -267,27 +307,14 @@ $(document).ready(function() {
 		}
 		else
 		{
-			percentTarget = $(this).val();
-			target = percentTarget/100;
+			percentTarget = $(this).val() / 100;
+			console.log(percentTarget);
+			logTotal();
 		}
 
 	})
-	$('#csv').click(function ()
-	{	
-		if(!$("#csvResult").length)
-		{
-			$('#inputs').append("</br><div class='cell results'><input type='text' id='csvResult'> </input><div>");
-		}
-		
 
-		$('#csvResult').val(dateFormatted.toString() + "," + $('#initials').val().toString() + "," + $('#worked').val().toString() + "," + $('#generatedFront').val().toString() + "," + $('#generatedBack').val().toString() +
-			"," + $('#toTarget').val().toString() + "," + $('#tagsTotal').val().toString());
-		
-	})
-
-	$('.displayResult').change(function() {
-		logTotal();
-	})
+	
 
 	
 
@@ -304,6 +331,12 @@ $(document).ready(function() {
 		$("#resCode" + index).hide();
 
 		decrementTime(code);
+
+		if(tags == 0)
+		{
+			$('#result').hide();
+			$('#resCode').hide();
+		}
 
 		logTotal();
 
@@ -333,13 +366,20 @@ $(document).ready(function() {
 		tags += code.count * 1;
 	}
 	
-	//logs current Time
+	//Updates the result Table
 	var logTotal = function()
 	{
-		$('#generatedFront').val(totalFront.toFixed(2));
-		$('#generatedBack').val(totalBack.toFixed(2));
-		$('#tagsTotal').val(tags);
-		$('#toTarget').val(((totalBack) - (hoursWorked * target)).toFixed(2));
+		target = percentTarget * hoursWorked;
+		toTarget = hoursWorked - target;
+	
+		$('#tDate').text(dateFormatted);
+		$('#tInitials').text($('#initials').val().toString());
+		$('#tWorked').text($('#worked').val());
+		$('#tGenF').text(totalFront.toFixed(2));
+		$('#tGenB').text(totalBack.toFixed(2));
+		$('#tTarget').text(target.toFixed(2));
+		$('#tToTarget').text(toTarget.toFixed(2));
+		$('#tTags').text(tags);
 		console.log("Total Front: " + totalFront.toFixed(2));
 		console.log("Total Back: " + totalBack.toFixed(2));
 	}

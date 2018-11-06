@@ -1,4 +1,4 @@
-header, footer {
+ header, footer {
 	position: relative;
 	width: 100%;
 	text-align: center;
@@ -69,8 +69,15 @@ input {
 	position: relative;
 }
 
-#csvResult {
-	width: 200px;
+#result {
+	border: solid black 2px;
+}
+
+
+#resTable td, th{
+	margin-left: 2%;
+	margin-right: 2%;
+	padding: 10px;
 }
 
 .navDiv {
