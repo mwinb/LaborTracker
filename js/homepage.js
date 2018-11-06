@@ -1,7 +1,11 @@
-
-
+/*
+ *Created By Michael Winberry
+ *First Version Completed 11/5/18
+*/
 
 $(document).ready(function() {
+
+	$('#viewData').hide();
 
 
 
