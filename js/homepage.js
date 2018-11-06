@@ -366,14 +366,18 @@ $(document).ready(function() {
         target = percentTarget * hoursWorked;
         toTarget = totalBack - target;
     
+        if( toTarget > 0 ) 
+            let toTarStr = "+" + toTarget.toFixed(2);
+        
+         
         $('#tDate').text(dateFormatted);
         $('#tInitials').text($('#initials').val().toString());
         $('#tWorked').text($('#worked').val());
         $('#tGenF').text(totalFront.toFixed(2));
         $('#tGenB').text(totalBack.toFixed(2));
         $('#tTarget').text(target.toFixed(2));
-        $('#tToTarget').text(toTarget.toFixed(2));
+        $('#tToTarget').text(toTarStr);
         console.log("Total Front: " + totalFront.toFixed(2));
-        console.log("Total Back: " + totalBack.toFixed(2));
+        
     }
 })
