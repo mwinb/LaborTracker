@@ -13,7 +13,7 @@ $(document).ready(function() {
     var rezCodes = [
     ["AMAL", 20, 9, "Apple Mail-In Repair"],
     ["ABAT", 15, 30, "Apple Battery Repair"],
-    ["AREC", 15, 30, "Apple Reciever Repair"],
+    ["AREC", 15, 30, "Apple Speaker Repair"],
     ["ASPK", 15, 30, "Apple Speaker Repair"],
     ["AVIB", 15, 30, "Apple Vibe Motor Repair"],
     ["ALON", 15, 0, "Apple Loaner Phone"],
@@ -365,10 +365,6 @@ $(document).ready(function() {
     {
         target = percentTarget * hoursWorked;
         toTarget = totalBack - target;
-        
-        if(toTarget > 0)
-            let toTargetStr = '+' + toTarget.toFixed(2);
-                  
     
         $('#tDate').text(dateFormatted);
         $('#tInitials').text($('#initials').val().toString());
@@ -376,7 +372,7 @@ $(document).ready(function() {
         $('#tGenF').text(totalFront.toFixed(2));
         $('#tGenB').text(totalBack.toFixed(2));
         $('#tTarget').text(target.toFixed(2));
-        $('#tToTarget').text(toTargetStr);
+        $('#tToTarget').text(toTarget.toFixed(2));
         console.log("Total Front: " + totalFront.toFixed(2));
         console.log("Total Back: " + totalBack.toFixed(2));
     }
