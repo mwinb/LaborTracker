@@ -29,7 +29,7 @@ $(document).ready(function() {
 	["GSMM", 32, 18, "Memory Install"],
 	["GSNW", 32, 18, "Network Card/Adapter Install"],
 	["GSOI", 32, 20, "Operating System Install"],
-	["GSOS", 32, 49, "Geek Squad Operating System Install"],
+	["GSOS", 32, 49, "Geek Squad Operating System Repair"],
 	["GSPS", 32, 18, "Power Supply Install"],
 	["GSPU", 32, 18, "Computer Processor Install"],
 	["GSSB", 32, 18, "System Board Install"],
@@ -63,7 +63,7 @@ $(document).ready(function() {
 	var toTarget = 0;
 	var tags = 0;
 
-//Create month/day/year date
+	//Create month/day/year date
 	var date = new Date();
 	var month = date.getMonth()+1;
 	var day = date.getDate();
@@ -136,12 +136,7 @@ $(document).ready(function() {
 
 		}
 
-	}
-
-
-
-	
-
+	}	
 
 	//Creates the Input, Dropdown, result table, and key for res Codes.
 	//hides all resCode objects, result table, and key until resCode is inizialized via dropdown
@@ -383,11 +378,4 @@ $(document).ready(function() {
 		console.log("Total Front: " + totalFront.toFixed(2));
 		console.log("Total Back: " + totalBack.toFixed(2));
 	}
-
-	
-
-
-	
-	
-
 })
