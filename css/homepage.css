@@ -21,6 +21,10 @@ input {
 	box-shadow: 10px 5px 5px grey;
 }
 
+#footerDiv {
+	font-size: 1.5em;
+}
+
 
 #navContainer {
     position: relative;
