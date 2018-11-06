@@ -314,10 +314,6 @@ $(document).ready(function() {
 
 	})
 
-	
-
-	
-
 
 
 	//Removes current Code when x is clicked.
@@ -370,7 +366,7 @@ $(document).ready(function() {
 	var logTotal = function()
 	{
 		target = percentTarget * hoursWorked;
-		toTarget = hoursWorked - target;
+		toTarget = totalBack - target;
 	
 		$('#tDate').text(dateFormatted);
 		$('#tInitials').text($('#initials').val().toString());

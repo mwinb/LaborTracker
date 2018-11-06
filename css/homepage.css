@@ -73,6 +73,10 @@ input {
 	border: solid black 2px;
 }
 
+#resTable {
+	width: 100%;
+}
+
 
 #resTable td, th{
 	margin-left: 2%;
