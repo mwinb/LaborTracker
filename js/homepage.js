@@ -13,7 +13,7 @@ $(document).ready(function() {
     var rezCodes = [
     ["AMAL", 20, 9, "Apple Mail-In Repair"],
     ["ABAT", 15, 30, "Apple Battery Repair"],
-    ["AREC", 15, 30, "Apple Speaker Repair"],
+    ["AREC", 15, 30, "Apple Reciever Repair"],
     ["ASPK", 15, 30, "Apple Speaker Repair"],
     ["AVIB", 15, 30, "Apple Vibe Motor Repair"],
     ["ALON", 15, 0, "Apple Loaner Phone"],
