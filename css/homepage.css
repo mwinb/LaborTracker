@@ -99,7 +99,8 @@ input {
 
 #resCode {
 	margin-top: 1%;
-	margin-bottom: 1%;
+	margin-bottom: 0%;
+	border-color: black;
 
 }
 
