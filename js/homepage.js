@@ -61,6 +61,7 @@ $(document).ready(function() {
     var percentTarget = 0;
     var target = 0;
     var toTarget = 0;
+    var tags = 0;
 
 
     //Create month/day/year date
