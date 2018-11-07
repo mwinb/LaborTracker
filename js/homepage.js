@@ -11,6 +11,10 @@ $(document).ready(function() {
 
     //Code, Front of precinct labor, Back of precinct Labor, Description
     var rezCodes = [
+    ["GSDB", 32, 57, "Data Back Up or Transfer"],
+    ["GSDI", 32, 30, "Diagnostic"],
+    ["GSOS", 32, 49, "Geek Squad Operating System Repair"],
+    ["GSSW", 32, 12, "Software Installation"],
     ["AMAL", 20, 9, "Apple Mail-In Repair"],
     ["ABAT", 15, 30, "Apple Battery Repair"],
     ["AREC", 15, 30, "Apple Reciever Repair"],
@@ -23,25 +27,21 @@ $(document).ready(function() {
     ["AWUR", 20, 9, "Apple Whole Unit Replacement"],
     ["ARDO", 0, 20, "Apple Repair Redo"],
     ["AFAL", 0, 20, "Apple Failed Same Unit Repair"],
-    ["GSDI", 32, 30, "Diagnostic"],
     ["GSHD", 32, 18, "Hard Drive Install"],
     ["GSHW", 32, 18, "Misc Internal Part Install"],
     ["GSMM", 32, 18, "Memory Install"],
     ["GSNW", 32, 18, "Network Card/Adapter Install"],
     ["GSOI", 32, 20, "Operating System Install"],
-    ["GSOS", 32, 49, "Geek Squad Operating System Repair"],
     ["GSPS", 32, 18, "Power Supply Install"],
     ["GSPU", 32, 18, "Computer Processor Install"],
     ["GSSB", 32, 18, "System Board Install"],
     ["GSSC", 32, 18, "Sound Card Install"],
-    ["GSSW", 32, 12, "Software Installation"],
     ["GSPW", 32, 12, "Password Reset"],
     ["GSVC", 32, 18, "Video Card Install"],
     ["GSCS", 30, 0, "PC/Tablet Setup"],
     ["GSDS", 20, 0, "Device Setup"],
     ["GSFM", 5, 0, "Restore Media Creation"],
     ["GSSH", 9, 0, "Device Screen Shield Install"],
-    ["GSDB", 32, 57, "Data Back Up or Transfer"],
     ["GSRD", 32, 57, "Precinct Data Recovery Level One"],
     ["GSSF", 32, 0, "Geek Squad Express Replacement"],
     ["GSCC", 35, 0, "Geek Squad Certified Open Box Computers"],
@@ -211,13 +211,15 @@ $(document).ready(function() {
 
             codesToInput.push(resCode(rezCodes[i]));
             $('#formContainer').append(codesToInput[i].resCodeHTML());
-            $('#resCode' + i).hide();
+            if(i > 3)
+            {
+            	$('#resCode' + i).hide();
+            }
 
         }
 
         //Hides both the resCode key div and the result table until initialized via dropdown
-        $('#result').hide();
-        $('#resCode').hide();
+        
         
         //Populates the Dropdown menu using the code and description from rezCode array
         for(let i = 0; i < rezCodes.length; i++)
@@ -238,7 +240,6 @@ $(document).ready(function() {
         if( index != 'default')
         {
             $("#resCode" + index).show();
-            $('#resCode').show();
             $("#selectCode").val('default');
         }
 
@@ -250,39 +251,36 @@ $(document).ready(function() {
      * if input is a number, increases the count of the resCode object and increases fop and bop times
      * and updates and shows the result. 
     */
-    $('.numInput').change(function () {
+    $('.numInput').on('change keyup paste',function () {
+        let oldVal = $(this).attr('value');
         let val = $(this).val();
         let index = $(this).attr("index");
         let code = codesToInput[index];
-        console.log(val);
-        console.log(isNaN(val).toString());
-
-        decrementTime(code);
-
+        
+        
         if (isNaN(val) == true ) 
         {
             alert("Must be a number");
-            $(this).val(0);
-            code.setCount(0);
-            
-
+            $(this).val(oldVal);
+            code.setCount(oldVal);
         }
         else 
         {
+            decrementTime(code.fop, code.bop, oldVal);
             code.setCount(val);
-            incrementTime(code);
+            incrementTime(code.fop, code.bop, val);
+            $(this).attr('value', val);
         }
-        $('#result').show();
         logTotal();
     })
 
     //Updates result upon the change of the initials input.
-    $('#initials').change(function() {
+    $('#initials').on('change keyup paste', function() {
         logTotal();
     })
 
     //Updates result upon the change of "Hours Worked" input (unles NaN).
-    $('#worked').change(function() {
+    $('#worked').on('change keyup paste',function() {
         if (isNaN($(this).val()) == true ) 
         {
             alert("Must be a number");
@@ -297,7 +295,7 @@ $(document).ready(function() {
     })
 
     //Updates result upon the change of "Target Percent" input (unless NaN)
-    $('#target').change(function() {
+    $('#target').on('change keyup paste',function() {
         if (isNaN($(this).val()) == true ) 
         {
             alert("Must be a number");
@@ -319,19 +317,16 @@ $(document).ready(function() {
     //Decrements total Times prior to deletion
     $('.removeCode').click( function () {
         let index = $(this).attr("index");
+        let oldVal = $('#num' + index).val();
         let code = codesToInput[index];
 
         logTotal();
 
+        decrementTime(code.fop, code.bop, oldVal);
+
+        $('#num' + index).val(0);
+        $('#num' + index).attr('value', 0);
         $("#resCode" + index).hide();
-
-        decrementTime(code);
-
-        if(tags == 0)
-        {
-            $('#result').hide();
-            $('#resCode').hide();
-        }
 
         logTotal();
 
@@ -339,26 +334,26 @@ $(document).ready(function() {
     })
 
     //Takes in code and decrements total times (minutes)
-    var decrementTime = function (code) 
+    var decrementTime = function (fop, bop, val) 
     {
 
-        if (code.fop > 0)
-            totalFront -= ((code.count * code.fop) / 60);
-        if(code.bop > 0)
-            totalBack -= ((code.count * code.bop) / 60);
+        if (fop > 0)
+            totalFront -= ((val * fop) / 60);
+        if(bop > 0)
+            totalBack -= ((val * bop) / 60);
 
-        tags -= code.count * 1;
+        tags -= val * 1;
     }
 
     //Takes in res code and increases the total times (minutes)
-    var incrementTime = function(code) 
+    var incrementTime = function(fop, bop, val) 
     {
-        if (code.fop > 0)
-            totalFront += (code.count * code.fop) / 60;
-        if(code.bop > 0)
-            totalBack += (code.count * code.bop) / 60;
+        if (fop > 0)
+            totalFront += (val * fop) / 60;
+        if(bop > 0)
+            totalBack += (val * bop) / 60;
 
-        tags += code.count * 1;
+        tags += val * 1;
     }
     
     //Updates the result Table
