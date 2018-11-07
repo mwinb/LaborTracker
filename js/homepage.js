@@ -58,7 +58,7 @@ $(document).ready(function() {
     var totalFront = 0;
     var totalBack = 0;
     var hoursWorked = 0;  
-    var percentTarget = 0;
+    var percentTarget = .79;
     var target = 0;
     var toTarget = 0;
     var tags = 0;
@@ -160,7 +160,7 @@ $(document).ready(function() {
 
             "<div class='cell results'>" + 
             "<div>Target Percent</div>" + 
-            "<input type='text' id='target' ></input>" + 
+            "<input type='text' id='target' value='79' ></input>" + 
             "</div>" +
             
             "<h3>Select Code</h3>"+
@@ -175,9 +175,9 @@ $(document).ready(function() {
             "<th class='resHeader'>Date</th>" + 
             "<th class='resHeader'>Initials</th>" + 
             "<th class='resHeaser'>Hours Worked</th>" + 
-            "<th class='resHeader'>Generated Front</th>" + 
+            //"<th class='resHeader'>Generated Front</th>" + 
             "<th class='resHeader'>Generated Back</th>" +
-            "<th class='resHeader'>Target (hrs)</th>" +
+            //"<th class='resHeader'>Target (hrs)</th>" +
             "<th class='resHeader'>To Target (hrs)</th>" + 
  
             "</tr>" +
@@ -185,15 +185,16 @@ $(document).ready(function() {
             "<td id='tDate'></td>" + 
             "<td id='tInitials'></td>" + 
             "<td id='tWorked'></td>" + 
-            "<td id='tGenF'></td>" + 
+            //"<td id='tGenF'></td>" + 
             "<td id='tGenB'></td>" + 
-            "<td id='tTarget'></td>" +
+            //"<td id='tTarget'></td>" +
             "<td id='tToTarget'></td>" + 
             "</tr>"+
             "</table>" + 
             "</div>" +
             "</div>"+
 
+            "<div id='resCodeWrap'>" +
             "<div id='resCode' class='resCodes' +>" +
             "<div class='abbr cell'>CODE</div>" +
             "<div class='fop cell' value='" + "FP" + "'>" + "FP" + "</div>" + 
@@ -201,6 +202,7 @@ $(document).ready(function() {
             "<div class='description cell'>" + "Description" + "</div>" + 
             "<div class='rhs'>"+
             "<div class='numInput cell' id='tags'>" + "Total" + "</div>" +
+            "</div>" +
             "</div>"
             
             );
@@ -210,7 +212,7 @@ $(document).ready(function() {
         {
 
             codesToInput.push(resCode(rezCodes[i]));
-            $('#formContainer').append(codesToInput[i].resCodeHTML());
+            $('#resCodeWrap').append(codesToInput[i].resCodeHTML());
             if(i > 3)
             {
             	$('#resCode' + i).hide();
@@ -299,8 +301,8 @@ $(document).ready(function() {
         if (isNaN($(this).val()) == true ) 
         {
             alert("Must be a number");
-            $(this).val('');
-            percentTarget = 0;
+            $(this).val(79);
+            percentTarget = .79;
         }
         else
         {
@@ -367,9 +369,9 @@ $(document).ready(function() {
         $('#tDate').text(dateFormatted);
         $('#tInitials').text($('#initials').val().toString());
         $('#tWorked').text($('#worked').val());
-        $('#tGenF').text(totalFront.toFixed(2));
+        //$('#tGenF').text(totalFront.toFixed(2));
         $('#tGenB').text(totalBack.toFixed(2));
-        $('#tTarget').text(target.toFixed(2));
+        //$('#tTarget').text(target.toFixed(2));
         $('#tToTarget').text(toTarget.toFixed(2));
         console.log("Total Front: " + totalFront.toFixed(2));
         

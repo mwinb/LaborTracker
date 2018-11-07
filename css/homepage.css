@@ -97,6 +97,17 @@ input {
 	padding: 10px;
 }
 
+#resCode {
+	margin-top: 1%;
+	margin-bottom: 1%;
+
+}
+
+#resCodeWrap {
+	width: 100%;
+	margin-bottom: 1%;
+}
+
 
 
 .navDiv {
@@ -110,7 +121,6 @@ input {
 }
 
 
-
 .resCodes {
 	border: solid coral 2px;
 	box-shadow: 10px 5px 5px black;
@@ -118,8 +128,7 @@ input {
 	align-content: center;
 	margin-right: 25%;
 	margin-left: 25%;
-	margin-top: 1%;
-	margin-bottom: 2%;
+	
 	background-color: gainsboro;
 
 }
