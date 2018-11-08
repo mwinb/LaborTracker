@@ -1,11 +1,13 @@
 /*
  *Created By Michael Winberry
  *First Version Completed 11/5/18
-*/
+ */
 
-$(document).ready(function() {
+ $(document).ready(function() {
 
     $('#viewData').hide();
+
+
 
 
 
@@ -53,25 +55,9 @@ $(document).ready(function() {
     ["GSCO", 20, 0, "Geek Squad Consultation"]
     ];
 
+
     var currentTabID = 0;
     var codesToInput = [];
-    var totalFront = 0;
-    var totalBack = 0;
-    var hoursWorked = 0;  
-    var percentTarget = .79;
-    var target = 0;
-    var toTarget = 0;
-    var tags = 0;
-
-
-    //Create month/day/year date
-    var date = new Date();
-    var month = date.getMonth()+1;
-    var day = date.getDate();
-    var dateFormatted = month + '/'  + day + '/' + date.getFullYear();
-
-
-    
     
 
     //return object containing input from rezCode array,
@@ -137,26 +123,57 @@ $(document).ready(function() {
 
         }
 
-    }    
+    }
+
+    var utiliaztion = function() {
+        return{
+            totalFront: 0,
+            totalBack: 0,
+            hoursWorked: 0,
+            percentTarget: .79,
+            targetHrs: 0,
+            toTarget: 0,
+            initials: "CA",
+            tags: 0,
+            day: null,
+            month: null,
+            year: null,
+            week: null,
+            dateFormatted: null,
+            setDate: function(newDate) {
+                this.day = newDate.getDate();
+                this.month = newDate.getMonth();
+                this.year = newDate.getFullYear();
+                this.dateFormatted = (this.month+1) + '/' + this.day + '/' + this.year;
+
+            }
+        }
+    }
+
+    var util = new utiliaztion();
+    util.setDate(new Date());
 
     //Creates the Input, Dropdown, result table, and key for res Codes.
     //hides all resCode objects, result table, and key until resCode is inizialized via dropdown
     var initializeInput = function () {
 
         $("#formContainer").append(
-            
+
 
             "<div id='inputs' class='resCodes'>"+
             "<h3>Input</h3>" +
+            /*
             "<div class='cell results'>" + 
             "<div>Initials</div>" + 
             "<input type='text' id='initials'></input>" + 
             "</div>"+
-
+            */
+            /*
             "<div class='cell results'>" + 
             "<div id='workedDiv'>Hours Worked</div>" + 
-            "<input type='text' id='worked' ></input>" + 
+            "<input type='text' id='worked' value='0' ></input>" + 
             "</div>" +
+            */
 
             "<div class='cell results'>" + 
             "<div>Target Percent</div>" + 
@@ -179,16 +196,16 @@ $(document).ready(function() {
             "<th class='resHeader'>Generated Back</th>" +
             //"<th class='resHeader'>Target (hrs)</th>" +
             "<th class='resHeader'>To Target (hrs)</th>" + 
- 
+
             "</tr>" +
             "<tr>" + 
-            "<td id='tDate'></td>" + 
-            "<td id='tInitials'></td>" + 
-            "<td id='tWorked'></td>" + 
+            "<td><input type='text' id='tDate'></input></td>" + 
+            "<td><input type='text' id='tInitials' value='CA'></input></td>" + 
+            "<td><input id='tWorked' type='text' value='0'></input></td>" + 
             //"<td id='tGenF'></td>" + 
-            "<td id='tGenB'></td>" + 
+            "<td id='tGenB'>0</td>" + 
             //"<td id='tTarget'></td>" +
-            "<td id='tToTarget'></td>" + 
+            "<td id='tToTarget' >0</td>" + 
             "</tr>"+
             "</table>" + 
             "</div>" +
@@ -201,7 +218,7 @@ $(document).ready(function() {
             "<div class='bop cell' value='" + "BP"+ "'>" + "BP" + "</div>" + 
             "<div class='description cell'>" + "Description" + "</div>" + 
             "<div class='rhs'>"+
-            "<div class='numInput cell' id='tags'>" + "Total" + "</div>" +
+            "<div class='numInput cell' id='util.tags'>" + "Total" + "</div>" +
             "</div>" +
             "</div>"
             
@@ -229,10 +246,48 @@ $(document).ready(function() {
             $("#selectCode").append("<option value='" + i + "' index='" + i + "' status='false' id='" + i + "' >" + rezCodes[i][0] + " - " + rezCodes[i][3] + "</option>");
         }
         console.log("true");
+        $('#tDate').val(util.dateFormatted);
     }
 
     //calls above function to initialize ARA input "screen"
     initializeInput();
+    
+    //Set focus and unfocus behaviors for input's
+    $('#tWorked').on('focus click', function(){
+        $(this).select();
+    })
+
+    $('#tWorked').focusout(function() {
+        if($(this).val() == "")
+        {
+            $(this).val(0);
+            util.hoursWorked = 0;
+        }
+        
+    })
+
+    $('#tInitials').focusout(function() {
+        if($(this).val() == "")
+        {
+            $(this).val("CA");
+            util.initials = "CA";
+        }
+    })
+
+    $('#tInitials').on("click focus", function() {
+        $(this).select();
+
+    })
+
+    $('#tDate').on('click focus', function() {
+        $(this).select();
+    })
+
+    //$('#tWorked').focus();
+    $('#tDate').focus();
+
+
+
 
     //if default from dropdown is selected, does nothing, otherwise
     //shows the selected resCode, resCode key, and resets dropdown to default
@@ -249,11 +304,11 @@ $(document).ready(function() {
     
 
     /* 
-     * Checks the number of tags from the currently selected resCode, if nan sets back to zero.
+     * Checks the number of util.tags from the currently selected resCode, if nan sets back to zero.
      * if input is a number, increases the count of the resCode object and increases fop and bop times
      * and updates and shows the result. 
-    */
-    $('.numInput').on('change keyup paste',function () {
+     */
+     $('.numInput').on('change keyup paste',function () {
         let oldVal = $(this).attr('value');
         let val = $(this).val();
         let index = $(this).attr("index");
@@ -278,20 +333,21 @@ $(document).ready(function() {
 
     //Updates result upon the change of the initials input.
     $('#initials').on('change keyup paste', function() {
-        logTotal();
+        util.initials = $(this).val();
+        console.log(util.initials);
     })
 
     //Updates result upon the change of "Hours Worked" input (unles NaN).
-    $('#worked').on('change keyup paste',function() {
+    $('#tWorked').on('change keyup paste',function() {
         if (isNaN($(this).val()) == true ) 
         {
             alert("Must be a number");
-            $(this).val('');
-            hoursWorked = 0;
+            $(this).val(0);
+            util.hoursWorked = 0;
         }
         else
         {
-            hoursWorked = $(this).val();
+            util.hoursWorked = $(this).val();
             logTotal();
         }
     })
@@ -302,12 +358,12 @@ $(document).ready(function() {
         {
             alert("Must be a number");
             $(this).val(79);
-            percentTarget = .79;
+            util.percentTarget = .79;
         }
         else
         {
-            percentTarget = $(this).val() / 100;
-            console.log(percentTarget);
+            util.percentTarget = $(this).val() / 100;
+            console.log(util.percentTarget);
             logTotal();
         }
 
@@ -335,45 +391,162 @@ $(document).ready(function() {
 
     })
 
+    $('#tDate').on('change', function() {
+        let newDate = $(this).val().split('/');
+        console.log(newDate);
+        console.log(newDate.length);
+        if(newDate.length == 3 )
+        {
+            let newMonth = newDate[0];
+            let newDay = newDate[1];
+            let newYear = newDate[2];
+
+            let isValid = isValidDate(newDay, newMonth, newYear);
+            console.log("isValidDate: " + isValid);
+            if(isValid)
+            {
+                util.setDate(new Date(newYear, (newMonth-1), newDay));
+                return;
+            }
+        }
+        alert("Invalid Date");
+        util.setDate(new Date());
+        $(this).val(util.dateFormatted);
+        
+
+    })
+
+
+    var isValidDate = function(thisDay, thisMonth, thisYear) {
+        let newDate = new Date(thisYear, (thisMonth-1), thisDay);
+        let tempDate = new Date();
+        console.log("New Date month: " + newDate.getMonth());
+        console.log("Date Month: " + util.month);
+        let validate = newDate.getFullYear() == thisYear && newDate.getMonth()+1 == thisMonth && newDate.getDate() == thisDay;
+        if(validate && isPast(newDate, tempDate))
+            return true;
+        else
+            return false;
+
+    }
+
+    var isPast = function(date1, date2) 
+    {
+        console.log("New Date: " + date1.getFullYear() + " Current Date: " + date2.getFullYear());
+        console.log("Date1: " + date1.getDate() + " Date2: " + date2.getDate());
+        if(date1.getFullYear() < date2.getFullYear())
+            return true;
+        else if(date1.getMonth() < date2.getMonth())
+            return true;
+        else if(date1.getDate() <= date2.getDate())
+            return true;
+        else
+            return false;
+    }
+
+
     //Takes in code and decrements total times (minutes)
-    var decrementTime = function (fop, bop, val) 
+    var decrementTime = function(fop, bop, val) 
     {
 
         if (fop > 0)
-            totalFront -= ((val * fop) / 60);
+            util.totalFront -= ((val * fop) / 60);
         if(bop > 0)
-            totalBack -= ((val * bop) / 60);
+            util.totalBack -= ((val * bop) / 60);
 
-        tags -= val * 1;
+        util.tags -= val * 1;
     }
 
     //Takes in res code and increases the total times (minutes)
     var incrementTime = function(fop, bop, val) 
     {
         if (fop > 0)
-            totalFront += (val * fop) / 60;
+            util.totalFront += (val * fop) / 60;
         if(bop > 0)
-            totalBack += (val * bop) / 60;
+            util.totalBack += (val * bop) / 60;
 
-        tags += val * 1;
+        util.tags += val * 1;
     }
     
     //Updates the result Table
     var logTotal = function()
     {
-        target = percentTarget * hoursWorked;
-        toTarget = totalBack - target;
-    
-        
-         
-        $('#tDate').text(dateFormatted);
-        $('#tInitials').text($('#initials').val().toString());
-        $('#tWorked').text($('#worked').val());
+        util.targetHrs = util.percentTarget * util.hoursWorked;
+        util.toTarget = util.totalBack - util.targetHrs;
+        $('#tWorked').val(util.hoursWorked);
         //$('#tGenF').text(totalFront.toFixed(2));
-        $('#tGenB').text(totalBack.toFixed(2));
+        $('#tGenB').text(util.totalBack.toFixed(2));
         //$('#tTarget').text(target.toFixed(2));
-        $('#tToTarget').text(toTarget.toFixed(2));
-        console.log("Total Front: " + totalFront.toFixed(2));
+        $('#tToTarget').text(util.toTarget.toFixed(2));
+        console.log("Total Front: " + util.totalFront.toFixed(2));
         
     }
+
+    var addNewUtilization = function() {
+        $.ajax({
+            url: '/add',
+            method: "POST",
+            data: {
+                day: util.day, 
+                month: util.month, 
+                year: util.year, 
+                week: util.week,
+                initials: util.initials, 
+                generatedFront: util.totalFront, 
+                generatedBack: util.totalBack,
+                toTarget: util.toTarget,
+                percent: util.percentTarget
+            },
+            success: function(data) {
+                alert("Successfully Added Utilization: " + util.dateFormatted + " " + util.initials);
+            },
+            error: function(err)
+            {
+
+               updateUtilization();
+
+           }
+
+       })
+
+        util = new Utilization();
+        util.setDate(new Date())
+    }
+
+    var updateUtilization = function() {
+        let confirmation = confirm("Utilization for " + util.initials  + " on " + util.initials + " Already Exists,\n Update?");
+        if(confirmation)
+        {
+            $.ajax({
+                url: '/update/',
+                type: 'POST',
+                data:
+                {
+                    day: util.day, 
+                    month: util.month, 
+                    year: util.year,
+                    week: util.week, 
+                    initials: util.initials, 
+                    generatedFront: util.totalFront, 
+                    generatedBack: util.totalBack,
+                    toTarget: util.toTarget,
+                    percent: util.percentTarget,
+
+
+                },
+                success: function() {
+                    alert("Successfully Added Utilization: " + util.dateFormatted + " " + util.initials);
+                },
+                error: function(data)
+                {
+                    console.log(data);
+                }
+            })
+        }
+        else
+        {
+            alert("No Data Has Been Updated.");
+        }
+    }
+
 })

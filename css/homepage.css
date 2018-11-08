@@ -109,6 +109,11 @@ input {
 	margin-bottom: 1%;
 }
 
+#tDate, #tInitials, #tWorked, #target {
+	width: 50%;
+}
+
+
 
 
 .navDiv {
