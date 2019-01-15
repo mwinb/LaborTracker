@@ -1,0 +1,297 @@
+ header, footer {
+ 	poistion: fixed ;
+	position: relative;
+	width: 100%;
+	text-align: center;
+	background-color: black;
+	background-size: 72px 72px;
+	color: white;
+	border: solid black 2px;
+
+}
+
+footer {
+	margin-top: 2.5%;
+}
+
+input {
+	text-align: center;
+}
+
+
+
+
+
+#headerDiv, #footerDiv {
+	padding-top: 25px;
+	padding-bottom: 25px;
+	box-shadow: 10px 5px 5px grey;
+}
+
+#footerDiv {
+	font-size: 1.5em;
+}
+
+
+#navContainer {
+    position: relative;
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: 50px;
+
+}
+
+#navbar {
+	margin-top: 0;
+	margin-left: auto;
+	margin-right: auto;
+	font-family: times;
+	text-align: left;
+	text-decoration: none;
+	display: inline-block;
+	text-align: center;
+	width: 100%;
+}
+
+#exchForm {
+	font-size: 1.3em;
+	margin-top: 50px;
+	border: solid black 2px;
+	box-shadow: 10px 5px 5px grey;
+	min-height: 500px;
+	text-align: center;
+
+}
+
+#selectCode {
+	
+	margin-bottom: 5%;
+	position: relative;
+
+}
+
+#tags {
+	margin-right: 15%;
+}
+
+#formContainer {
+	display: inline-block;
+	
+}
+
+
+#inputs {
+	display: inline-block;
+	margin: 20px;
+	width: auto;
+
+
+}
+
+#worked {
+	position: relative;
+}
+
+#result {
+	border: solid black 2px;
+}
+
+#resTable {
+	width: 100%;
+	display: inline-block;
+}
+
+
+#resTable td, th{
+	margin-left: 2%;
+	margin-right: 2%;
+}
+
+#resCode {
+	margin-top: 1%;
+	margin-bottom: .5%;
+	border-color: black;
+
+
+}
+
+#resCodeWrap {
+	width: 100%;
+	margin-bottom: 1%;
+}
+
+#tDate, #tInitials, #tWorked, #target, #tWeek, #fMonth, #fYear {
+	width: 75%;
+}
+
+#searchInputs {
+	text-align: center;
+}
+
+#viewData {
+	width: auto;
+	background-color: gainsboro;
+}
+
+#submitSearchDiv {
+	margin-top: 3%;
+}
+
+#printData {
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	width: 100%;
+	
+}
+
+#addUtildb {
+	background-color: black;
+	color: white;
+	width: 20%;
+	height: 20%;
+	margin-bottom: 5px;
+}
+
+#selSearch {
+	margin: 20px;
+}
+
+#dataSearch {
+	width: auto;
+	display: inline-block;
+}
+
+#dataWrap {
+	width: auto;
+
+}
+
+#loginForm {
+	margin-top: 50%;
+	display: inline-block;
+}
+
+#tags {
+	margin-right: 3.7%;
+}
+
+.dataWrap { 
+	border-spacing: 30px;
+	border-collapse: separate;
+	border: solid black;
+	margin: 20px;
+
+
+}
+
+
+
+.navDiv {
+	display: inline-block;
+	width: 300px;
+	border: solid black 2px;
+	box-shadow: 10px 5px 5px grey;
+	text-align: center;
+	background-color: gainsboro;
+	color: black;
+}
+
+
+.resCodes {
+	width: auto;
+	border: solid coral 2px;
+	box-shadow: 10px 5px 5px black;
+	background-color: gainsboro;
+
+}
+
+.abbr, .fop, .bop, .description {
+	font-weight: bold;
+}
+
+.abbr {
+	float: left;
+
+
+}
+
+.fop {
+	float: left;
+}
+
+.bop {
+	float: left;
+}
+
+.description {
+	float: left;
+}
+
+
+
+.cell {
+	display: inline-block;
+	padding: 5px;
+	margin: 5px;
+
+}
+.rhs {
+	overflow: none;
+	
+	text-align: right;
+}
+
+
+
+
+.results {
+	text-align: center;
+}
+
+
+
+
+.numInput {
+	width: 100px;
+	text-align: center;
+	margin-right: auto;
+	margin-letft:auto;
+	
+		
+}
+
+.removeCode {
+	color: white;
+	background-color: #010202;
+	
+
+}
+
+.searchInput {
+	width: 25%;
+	max-width: 75%;
+}
+
+.searchTable {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.dataTable {
+	text-align: center;
+	width: 100px;
+	padding-right: 10px;
+	font-size: 1.3em
+}
+
+.vTotals {
+	font-weight: bold;
+
+}
+
+
+

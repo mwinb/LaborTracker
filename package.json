@@ -1,0 +1,20 @@
+{
+  "name": "labortracker",
+  "version": "1.0.0",
+  "description": "Tool for Advanced Repair Agents at Geek Squad. Used to increase accountability, productivity, and utilization.",
+  "main": "server.js",
+  "dependencies": {
+    "bcrypt": "^3.0.2",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "mongodb": "^2.2.36"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Michael Winberry",
+  "license": "ISC"
+}
